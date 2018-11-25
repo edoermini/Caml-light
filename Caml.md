@@ -1,6 +1,7 @@
-# **Caml** #
-Caml é un meta language, perché veniva usato per descrivere la semantica di programmi scritti in altri linguaggi, in quanto molto semplice da usare.
-Fa parte del gruppo dei **linguaggi funzionali**, cioé linguaggi incentrati sul concetto di funzione nel senso matematico del termine, e in piu é caratterizzato dalla **ricorsivitá**, infatti le funzioni possono richiamare se stesse. In particolare, in questo testo presenteremo i metodi di programmazione funzionale con il Caml Light.
+# **Caml Light** #
+Caml light é una leggera e versatile implementazione del linguaggio Caml, sviluppato intorno all'inizio degli anni '90. Il linguaggio é realizato come un compilatore di bytecode e sia l'interprete che il sistema di runtime sono sviluppati in c standard. Il linguaggio é nominato light proprio perché é facilmente spostabile sulla maggior parte di piattaforme a 32 o 64 bit.  
+Caml é un meta language impiegato per descrivere la semantica di programmi scritti in altri linguaggi, perche molto semplice da usare.
+Fa parte del gruppo dei **linguaggi funzionali**, cioé incentrati sul concetto di funzione nel senso matematico del termine. Poiché le funzioni possono richiamare se stesse e non esistono cambiamenti di stati, si tratta di un linguaggio basato sul **paradigma ricorsivo**.
 
 ## **Caml light:** Installazione ##
 
@@ -18,7 +19,7 @@ Fa parte del gruppo dei **linguaggi funzionali**, cioé linguaggi incentrati sul
 (Gli esempi in questa guida saranno presi da un terminale linux)
 
 * **Espressioni:**<br>
-  Le espressioni in caml devono tutte terminare con ';;', altrimenti caml non intende che l'espressione é terminata e si aspetta altro:
+  Le espressioni in caml devono tutte terminare con ';;', altrimenti caml non interpreta l'espressione e si aspetta altro:
 
   ESEMPIO:
   ```
@@ -26,18 +27,18 @@ Fa parte del gruppo dei **linguaggi funzionali**, cioé linguaggi incentrati sul
   - : int = 3
   ```
 
-  La seconda riga corrisponde alla risposta che il caml da in base all'interpretazione dell'espressione data.<br>
-  Nella risposta il `-` sta ad indicare il nome che ho dato al valore, in questo caso é un meno perche non ho dato nessun nome al valore. Per dare un nome ad un valore si usa l'operazione **let**. <br>
+  La seconda riga corrisponde a ciò che caml ritorna in base all'interpretazione dell'espressione data.<br>
+  Nella risposta il `-` sta ad indicare il nome che é stato dato al valore, in questo caso c´è un meno perche appunto non é stato dato alcun nome al valore. Per dare un nome ad un valore si usa l'operazione **let**. <br>
 
   ESEMPIO:
   ```
   #let n = 3;;
   n : int = 3
   ```
-  Dopo i due punti caml ci dice il tipo del risultato, che lo capisce senza che noi lo specifichiamo attraverso un **inferenza di tipo**, e poi ci da il valore dell'espressione dopo l'uguale.
+  Dopo i due punti caml stampa il tipo del risultato, che lo capisce senza che venga esplicitamente specificato attraverso un **inferenza di tipo**, e in fine stampa il valore dell'espressione dopo l'uguale.
 
   * **Operazioni:**<br>
-  Le operazioni in caml sono uguali come in tutti gli altri linguaggi, l'unica differenza é che fa inferenza di tipo attraverso queste quindi esistono 2 diversi modi di scrivere una stessa operazione in base a che tipi la stiamo applicando:
+  Le operazioni in caml sono le stesse di tutti gli altri linguaggi, l'unica differenza é che fa inferenza di tipo attraverso queste, quindi esistono 2 diversi modi di scrivere una stessa operazione in base a che tipo di valori la stiamo applicando:
 
     * Somma tra interi: +
 
@@ -66,7 +67,7 @@ Fa parte del gruppo dei **linguaggi funzionali**, cioé linguaggi incentrati sul
   f : int -> int = <fun>
   ```
   La prima riga corrisponde a quello che bisogna scrivere per dichiarare una funzione. Dopo let servono dei nomi, il primo (`f`) é il nome della funzione, il secondo (`n`) é il parametro della funzione, ovviamente i nomi delle funzioni e dei parametri di queste sono arbitrari.<br>
-  La seconda riga, come sempre, corrisponde a quello che ci risponde caml, infatti ci dice che ora `f` é la funzione che va da interi ad interi (`int -> int`), cioé che ha come parametri valori interi e restituisce valori interi, e che é uguale ad un valore funzionale (`<fun>`). Ogni dichiarazione di funzione ha come risultato `<fun>` perché, secondo la teoria della calcolabilità, in molti casi non é decidibile quale funzione stiamo definendo.
+  La seconda riga, come sempre, corrisponde a quello che ritorna caml in base alla sua interpretazione, infatti stampa che `f` é la funzione che va da interi ad interi (`int -> int`), cioé che ha come parametri valori interi e restituisce valori interi, e che é uguale ad un valore funzionale (`<fun>`). Ogni dichiarazione di funzione ha come risultato `<fun>` perché, secondo la teoria della calcolabilità, in molti casi non é decidibile quale funzione stiamo definendo.
 
   Ora se usiamo questa funzione `f` con il parametro 2:
   ```
@@ -95,7 +96,7 @@ ESEMPIO:
 #f(3,5);;
 - : int = 11
 ```
-La seconda é una funzione detta curryed (dal matematico americano Curry del '900), cioé una funzione con argomenti in sequenza. Significa che, prendendo come esempio il secondo caso sopra, la funzione `f` prende un primo argomento `n` intero (`int -> ...`) e restituisce una funzione che prende un argomento `m` intero (`... -> int -> ...`) e mi da il risultato che é sempre un intero (`... -> int`).
+La seconda é una funzione detta curryed (dal matematico americano Curry del '900), cioé una funzione con argomenti in sequenza. Significa che, prendendo come esempio il secondo caso sopra, la funzione `f` prende un primo argomento `n` intero (`int -> ...`) e restituisce una funzione che prende un argomento `m` intero (`... -> int -> ...`) e da il risultato che é a sua volta un intero (`... -> int`).
 
 ESEMPIO:
 ```
@@ -133,7 +134,7 @@ Le funzioni in caml quindi posso dare come risultato altre funzioni.
   #let f n = n;;
   f : 'a -> 'a = <fun>
   ```
-  La risposta di caml a questa espressione, che sarebbe la funzione identità, é che la funzione `f` é una funzione che va da un qualsiasi tipo `'a` allo stesso tipo `'a`. Da questo si capisce bene che il caml interpreta i tipi che non capisce da l'inferenza di tipi mettendo un apice e vicino una lettera qualsiasi.
+  La risposta di caml a questa espressione, che sarebbe la funzione identità, é che la funzione `f` é una funzione che va da un qualsiasi tipo `'a` allo stesso tipo `'a`. Da questo si capisce bene che il caml interpreta i tipi che non definisce da l'inferenza di tipi mettendo un apice e vicino una lettera qualsiasi.
 
   ESEMPIO:
   ```
@@ -145,8 +146,8 @@ Le funzioni in caml quindi posso dare come risultato altre funzioni.
   ```
 
 * **Funzioni Ricorsive:**<br>
-  L'espressione di funzioni ricorsive in caml spesso é necessario farla inserendo un espressione condizionale: `if e then e1 else e2`, con `e` rappresentante un valore booleano *true* o *false*, ed `e1`, `e2` aventi lo stesso tipo.<br>
-  Nella dichiarazione di funzioni ricorsive in caml non basta mettere `let` ma é necessario far capire a caml che la funzione che stiamo definendo é una funzione ricorsiva (la funzione appare sia a destra che a sinistra dell'uguale), questo lo si fa con `let rec`.
+  L'espressione di funzioni ricorsive in caml light spesso é necessario farla inserendo un espressione condizionale: `if e then e1 else e2`, con `e` rappresentante un valore booleano *true* o *false*, ed `e1`, `e2` aventi lo stesso tipo.<br>
+  Nella dichiarazione di funzioni ricorsive non basta mettere `let` ma é necessario far capire a caml che la funzione che stiamo definendo é una funzione ricorsiva (la funzione appare sia a destra che a sinistra dell'uguale), questo lo si fa con `let rec`.
 
   ESEMPIO:
   ```
@@ -160,7 +161,7 @@ Le funzioni in caml quindi posso dare come risultato altre funzioni.
   ```
 
 ## **Caml light:** Liste ##
-Le liste in caml sono strutture omogenee, cioé strutture con valori dello stesso tipo e con un ordine.<br>
+Le liste in caml light sono strutture omogenee, cioé strutture con valori dello stesso tipo e con un ordine.<br>
 Questo tipo di dato viene indicato con delle parentesi quadre, in cui, al loro interno vengono messi i valori, rigorosamente tutti dello stesso tipo.
 
 ESEMPIO:
@@ -168,10 +169,10 @@ ESEMPIO:
 #[10; 3; 4];;
 - : int list = [10; 3; 4]
 ```
-Caml risponde dicendoci che l'espressione corrisponde ad una lista e dandoci il tipo dei valori della lista `int list ...` e in fine ci da il valore della lista `... = [10; 3; 4]`
+Caml come sempre ritorna la sua interpretazione stampando, in questo caso, il tipo dei valori della lista `int list ...` e il valore della lista `... = [10; 3; 4]`
 
 * **Lista vuota:**<br>
-  In caml esiste una particolare lista chiamata lista vuota e indicata con `[]`, la quale può essere usata per costruire appunto liste.<br>
+  In caml esiste una particolare lista chiamata lista vuota che viene indicata con `[]`, la quale può essere usata per costruire appunto liste.<br>
 
   ESEMPIO:
   ```
@@ -181,14 +182,14 @@ Caml risponde dicendoci che l'espressione corrisponde ad una lista e dandoci il 
   Il fatto che la lista vuota sia una particolare lista lo si nota dalla risposta di caml infatti il tipo di valori che può avere quella lista é indefinito, perciò la lista vuota é una lista non ancora inizializzata del tutto (alla quale manca un tipo di valori definito). Il tipo dei valori della lista però viene definito non appena si inserisce il primo valore con il *cons*, e quindi piu in generale caml capisce il tipo di valori di una lista dall'elemento in testa a quest'ultima.
 
 * **Costruttore di valori (cons):**<br>
-  Il costruttori di valori o *cons* é un operatore infisso (si indica in mezzo ai valori) e si indica con `::`. Questo operatore si usa per aggiungere valori int testa ad una lista, infatti, il primo argomento (a sinistra dell'operatore) é un valore di lista e il secondo (a destra dell'operatore) é una lista con valori dello stesso tipo del primo argomento.
+  Il costruttore di valori o *cons* é un operatore infisso (si indica in mezzo ai valori) e si indica con `::`. Questo operatore si usa per aggiungere valori in testa ad una lista, infatti, il primo argomento (a sinistra dell'operatore) é un valore di lista e il secondo (a destra dell'operatore) é una lista con valori dello stesso tipo del primo argomento.
 
   ESEMPIO:
   ```
   #3 :: [-2; 4];;
   - : int list = [3; -2; 4]
   ```
-  L'utilita, quindi, della lista vuota quindi entra in gioco ora, infatti, come detto in precedenza, con la lista vuota e usando il costruttore di valori si possono creare liste.
+  Qui si nota l'utilità della lista vuota, infatti, come detto in precedenza, con questo tipo di lista e usando il costruttore di valori si possono creare altre liste.
 
   ESEMPIO:
   ```
@@ -229,7 +230,7 @@ Caml risponde dicendoci che l'espressione corrisponde ad una lista e dandoci il 
   #[g; g];;
   - : (int -> int) list = [<fun>, <fun>]
   ```
-  La risposta di caml cambia leggermente perche il valore dei tipi della lista é un valore di funzione da interi ad interi (`int -> int`) e la lista é formata da valori funzionali `<fun>` tanti quante sono le funzioni allínterno della lista.
+  La risposta di caml cambia leggermente perche il valore dei tipi della lista é un valore di funzione da interi ad interi (`int -> int`) e la lista é formata da valori funzionali `<fun>` tanti quante sono le funzioni all'interno della lista.
 
 * **Funzioni sulle liste:**<br>
   Sulle liste sono predefinite 2 funzioni:
@@ -262,5 +263,5 @@ Caml risponde dicendoci che l'espressione corrisponde ad una lista e dandoci il 
   ```
 
 ## **Caml light:** Pattern ##
-Un pattern é un'espressione che contiene **variabili**, cioé nomi che possono essere instanziati (ai quali posso associare valori), per esempio `x :: []` é un pattern.<br>
-I pattern possono essere uguagliati a valori instanziando le variabili a valori, ovviamente corretti dal punto di vista del tipo.
+Un pattern é un'espressione che contiene **variabili**, cioé nomi che possono essere istanziati (ai quali posso associare valori), per esempio `x :: []` é un pattern.<br>
+I pattern possono essere uguagliati a valori istanziando le variabili a valori, ovviamente corretti dal punto di vista del tipo.
