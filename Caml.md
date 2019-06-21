@@ -482,7 +482,7 @@ DEFINIZIONE DI FORALL
 forall : ('a -> bool) -> 'a list -> bool = <fun>
 ```
 
-#### Funzione: exists (built-in)####
+#### Funzione: exists (built-in) ####
 La funzione `exists` al contrarion di `forall` permette di verificare se un certo predicato è valido su almeno un elemento di una lista (quantificazione esistenziale su liste).
 
 DEFINIZIONE DI EXISTS
@@ -503,4 +503,28 @@ DEFINIZIONE DI MAP
                   [] -> []
                 | x :: xs -> (f x) :: map f xs;;
 map : ('a -> 'b) -> 'a list -> 'b list = <fun>
+```
+
+#### Funzione: filter ####
+La funzione `filter` prende come argomenti un predicato `p` e una lista `l` e restituisce una lista contenente gli elementi di `l` che soddisfano il predicato `p`.
+
+DEFINIZIONE DI FILTER
+```
+#let rec filter p l = match l with
+                      [] -> []
+                    | x :: xs when p x -> x :: filters p xs
+                    | x :: xs when not(p x) -> filter p xs;;
+filter : ('a -> bool) -> 'a list -> 'a list = <fun>
+```
+
+#### Funzione: foldr ####
+La funzione `foldr` prende come argomenti unafunzione `f` un elemento `a` il cui tipo cambia in base al problema e una lista `l` ai quali elementi verrà applicata la funzione `f`. La funzione generica `f` passata come parametro alla `foldr` verrà definita esternamente e la sua definizione come il tipo di `a` cambia in base al problema che si vuole risolvere, in ogni caso prende come parametri due valori `x` e `y` dove `x` è un elemento della lista `l` e `y` è un valore che può essere un booleano, un intero, o un inseieme di valori.
+Solitamente la `foldr` viene utilizzata quando si deve risolvere un problema che richiete una valutazione degli elementi della lista `l` partendo dalla coda.
+
+DEFINIZIONE DI FOLDR
+```
+#let rec foldr f a l = match l with
+                        [] -> a
+                      | x :: xs -> f x (foldr f a xs);;
+foldr : ('a -> 'b -> 'b) -> 'b -> 'a list -> 'b = <fun>
 ```
